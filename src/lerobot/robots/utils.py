@@ -44,6 +44,14 @@ def make_robot_from_config(config: RobotConfig) -> Robot:
         from .hope_jr import HopeJrHand
 
         return HopeJrHand(config)
+    elif config.type == "piper":
+        from .piper import Piper
+
+        return Piper(config)
+    elif config.type == "piper_dual":
+        from .piper_dual import PiperDual
+
+        return PiperDual(config)
     elif config.type == "hope_jr_arm":
         from .hope_jr import HopeJrArm
 
