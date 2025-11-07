@@ -16,6 +16,7 @@ from .piper_sdk_interface_dual import PiperSDKInterfaceDual
 import torch
 import numpy as np
 import time
+import math
 
 class PiperDual(Robot):
     config_class = PiperConfigDual
@@ -32,19 +33,12 @@ class PiperDual(Robot):
         super().__init__(config, **kwargs)
         self.sdk = PiperSDKInterfaceDual(port_r=config.can_interface_r, port_l=config.can_interface_l, gripper_r_serial = config.gripper_serial_r, gripper_l_serial = config.gripper_serial_l)
         self.cameras = make_cameras_from_configs(config.cameras)
-        # Connect cameras
-        for name, camera in self.cameras.items():
-            camera.connect()
-            if not camera.is_connected:
-                raise ConnectionError(f"Failed to connect camera {name}")
-            print(f"Camera {name} connected")
-        self._is_connected = True
     
     @property
     def _motors_ft(self) -> dict[str, type]:
         EEF_KEYS = [
-        	"X_r","Y_r","Z_r","RX_r","RY_r","RZ_r","Gripper_dis_r",
-    		"X_l","Y_l","Z_l","RX_l","RY_l","RZ_l","Gripper_dis_l"
+        	"r_joint_0.pos","r_joint_1.pos","r_joint_2.pos","r_joint_3.pos","r_joint_4.pos","r_joint_5.pos","r_gripper.dis",
+    		"l_joint_0.pos","l_joint_1.pos","l_joint_2.pos","l_joint_3.pos","l_joint_4.pos","l_joint_5.pos","l_gripper.dis"
 		]
         return {k: float for k in EEF_KEYS}
 
@@ -72,45 +66,25 @@ class PiperDual(Robot):
 
     def connect(self) -> None:
         # Connect piper motors
-        self.arm.connect(enable=True)
-        logger.info("Piper arm connected")
+        self.sdk.connect()
+        print("Piper arm connected")
 
         # Connect cameras
         for name, camera in self.cameras.items():
             camera.connect()
             if not camera.is_connected:
                 raise ConnectionError(f"Failed to connect camera {name}")
-            logger.info(f"Camera {name} connected")
+            print(f"Camera {name} connected")
         
         self._is_connected = True
-        logger.info("All devices connected")
 
     def calibrate(self) -> None:
         pass
         # """Calibrate the robot by moving to home position."""
-        # if not self._is_connected:
-        #     raise RobotDeviceNotConnectedError(
-        #         "Piper is not connected. You need to run `robot.connect()`."
-        #     )
-        
-        # logger.info("Starting Piper calibration")
-        # self.arm.apply_calibration()
-        # self._is_calibrated = True
-        # logger.info("Piper calibration completed")
 
     def configure(self) -> None:
         pass
         # """Configure the robot with recommended settings."""
-        # if not self._is_connected:
-        #     raise RobotDeviceNotConnectedError(
-        #         "Piper is not connected. You need to run `robot.connect()`."
-        #     )
-        
-        # # Configure motors if needed
-        # if hasattr(self.arm, 'configure_motors'):
-        #     self.arm.configure_motors()
-        
-        # logger.info("Piper configuration completed")
 
     def disconnect(self) -> None:
         """Disconnect piper and cameras."""
@@ -131,55 +105,55 @@ class PiperDual(Robot):
         print("All devices disconnected")
 
     def get_observation(self) -> dict[str, torch.Tensor]:
-        obs_dict = self.sdk.get_pos()
+        obs_dict = self.sdk.get_status()
 
         for cam_key, cam in self.cameras.items():
             obs_dict[cam_key] = cam.async_read()
         return obs_dict
 
     ## Remain Fixed ##
-    def send_action_joint(self, action: torch.Tensor) -> torch.Tensor:
-        # Apply safety limits if configured
-        a = action.detach().float().cpu().view(-1)
-        a_np = a.numpy()
-        positions = [
-            a_np[0],
-            a_np[1],
-            a_np[2],
-            a_np[3],
-            a_np[4],
-            a_np[5],
-            a_np[6],
-            a_np[7],
-            a_np[8],
-            a_np[9],
-            a_np[10],
-            a_np[11],
-            a_np[12],
-            a_np[13]
-        ]
-        self.sdk.set_joint_positions(positions)
-        return action
-
     def send_action(self, action: torch.Tensor) -> torch.Tensor:
         # Apply safety limits if configured
-        a = action.detach().float().cpu().view(-1)
+        a = action.detach().float().cpu().view(-1) # unit in rad and 100 mm
         a_np = a.numpy()
-        positions = [
+        joint_positions = [
             a_np[0],
             a_np[1],
             a_np[2],
             a_np[3],
             a_np[4],
             a_np[5],
-            a_np[6],
+            a_np[6], # Gripper distance 
             a_np[7],
             a_np[8],
             a_np[9],
             a_np[10],
             a_np[11],
             a_np[12],
-            a_np[13]
+            a_np[13] # Gripper distance
+        ]
+        self.sdk.set_joint_positions(joint_positions)
+        return action
+
+    def send_action_eef(self, action: torch.Tensor) -> torch.Tensor:
+        # Apply safety limits if configured
+        obs = self.get_observation()
+        rad_2_deg = 180/math.pi
+        positions = [
+            obs["X_r"] + action["X_r"],
+            obs["Y_r"] + action["Y_r"],
+            obs["Z_r"] + action["Z_r"],
+            (obs["RX_r"] + action["RX_r"])*rad_2_deg,
+            (obs["RY_r"] + action["RY_r"])*rad_2_deg,
+            (obs["RZ_r"] + action["RZ_r"])*rad_2_deg,
+            (obs["Gripper_dis_r"] + action['Gripper_dis_r']) * 95.741,
+            obs["X_l"] + action["X_l"],
+            obs["Y_l"] + action["Y_l"],
+            obs["Z_l"] + action["Z_l"],
+            (obs["RX_l"] + action["RX_l"])*rad_2_deg,
+            (obs["RY_l"] + action["RY_l"])*rad_2_deg,
+            (obs["RZ_l"] + action["RZ_l"])*rad_2_deg,
+            (obs["Gripper_dis_l"] + action['Gripper_dis_l']) * 95.741
         ]
         self.sdk.set_end_position(positions)
         return action
