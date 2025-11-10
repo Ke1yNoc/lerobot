@@ -1,0 +1,151 @@
+{
+  "description": "20 small-motion experiments for policy_to_joint_demo (translation < 0.02m, rotation < 10deg)",
+  "defaults": {
+    "pos_thresh": 0.3,
+    "ori_thresh": 1.0,
+    "interp_threshold_deg": 30.0,
+    "interp_step_deg": 1.0
+  },
+  "experiments": [
+    {
+      "name": "exp01_euler_dx15mm_dy5mm_yaw5deg",
+      "use_orient": false,
+      "current": [0.0, 0.25, -0.15, 0.10, -0.10, 0.0],
+      "delta": [0.015, 0.005, 0.0, 0.0, 0.0, 0.0873],
+      "delta_frame": "ee"
+    },
+    {
+      "name": "exp02_euler_dx10mm_dz10mm_yaw-5deg",
+      "use_orient": false,
+      "current": [0.05, 0.30, -0.10, 0.15, -0.12, 0.02],
+      "delta": [0.010, 0.0, 0.010, 0.0, 0.0, -0.0873],
+      "delta_frame": "ee"
+    },
+    {
+      "name": "exp03_euler_dx-12mm_dy9mm_dz10mm_yaw8deg",
+      "use_orient": false,
+      "current": [0.02, 0.28, -0.18, 0.08, -0.08, 0.01],
+      "delta": [-0.012, 0.027, 0.010, 0.0, 0.0, 0.1396],
+      "delta_frame": "ee"
+    },
+    {
+      "name": "exp04_euler_dx10mm_pitch-5deg_yaw3deg",
+      "use_orient": false,
+      "current": [0.00, 0.26, -0.20, 0.12, -0.05, -0.02],
+      "delta": [0.010, 0.0, 0.0, 0.0, -0.0873, 0.0524],
+      "delta_frame": "ee"
+    },
+    {
+      "name": "exp05_euler_dy-19mm_dz15mm_roll5deg",
+      "use_orient": false,
+      "current": [0.03, 0.20, -0.12, 0.05, -0.08, 0.00],
+      "delta": [0.0, -0.190, 0.015, 0.0873, 0.0, 0.0],
+      "delta_frame": "ee"
+    },
+    {
+      "name": "exp06_euler_dx18mm_dy-8mm_dz5mm_yaw10deg",
+      "use_orient": false,
+      "current": [0.06, 0.35, -0.22, 0.10, -0.15, 0.03],
+      "delta": [0.018, -0.008, 0.005, 0.0, 0.0, 0.1745],
+      "delta_frame": "ee"
+    },
+    {
+      "name": "exp07_euler_dx5mm_dy5mm_pitch3deg_yaw4deg",
+      "use_orient": false,
+      "current": [-0.02, 0.22, -0.16, 0.08, -0.06, 0.01],
+      "delta": [0.005, 0.005, 0.0, 0.0, 0.0524, 0.0698],
+      "delta_frame": "ee"
+    },
+    {
+      "name": "exp08_euler_dx-10mm_dy-5mm_dz-15mm_roll-5deg",
+      "use_orient": false,
+      "current": [0.02, 0.24, -0.14, 0.09, -0.09, 0.02],
+      "delta": [-0.010, -0.005, -0.015, -0.0873, 0.0, 0.0],
+      "delta_frame": "ee"
+    },
+    {
+      "name": "exp09_euler_dx12mm_dz6mm_yaw6deg_pitch-3deg",
+      "use_orient": false,
+      "current": [0.01, 0.27, -0.10, 0.12, -0.05, 0.00],
+      "delta": [0.012, 0.0, 0.006, 0.0, -0.0524, 0.1047],
+      "delta_frame": "ee"
+    },
+    {
+      "name": "exp10_euler_dx8mm_dy-12mm_dz4mm_yaw2deg",
+      "use_orient": false,
+      "current": [0.00, 0.30, -0.12, 0.10, -0.10, 0.00],
+      "delta": [0.008, -0.012, 0.004, 0.0, 0.0, 0.0349],
+      "delta_frame": "ee"
+    },
+    {
+      "name": "exp11_quat_dx15mm_dy5mm_yaw5deg",
+      "use_orient": true,
+      "current": [0.10, 0.40, -0.10, 0.20, -0.15, 0.05],
+      "delta": [0.015, 0.005, 0.0, 0.0, 0.0, 0.0873],
+      "delta_frame": "ee"
+    },
+    {
+      "name": "exp12_quat_dx10mm_dz10mm_yaw-5deg",
+      "use_orient": true,
+      "current": [0.12, 0.42, -0.12, 0.22, -0.18, 0.04],
+      "delta": [0.010, 0.0, 0.010, 0.0, 0.0, -0.0873],
+      "delta_frame": "ee"
+    },
+    {
+      "name": "exp13_quat_dx-12mm_dy9mm_dz10mm_yaw8deg",
+      "use_orient": true,
+      "current": [0.08, 0.35, -0.20, 0.18, -0.10, 0.02],
+      "delta": [-0.012, 0.027, 0.010, 0.0, 0.0, 0.1396],
+      "delta_frame": "ee"
+    },
+    {
+      "name": "exp14_quat_dx10mm_pitch-5deg_yaw3deg",
+      "use_orient": true,
+      "current": [0.09, 0.38, -0.18, 0.16, -0.12, 0.03],
+      "delta": [0.010, 0.0, 0.0, 0.0, -0.0873, 0.0524],
+      "delta_frame": "ee"
+    },
+    {
+      "name": "exp15_quat_dy-19mm_dz15mm_roll5deg",
+      "use_orient": true,
+      "current": [0.07, 0.33, -0.14, 0.14, -0.09, 0.01],
+      "delta": [0.0, -0.190, 0.015, 0.0873, 0.0, 0.0],
+      "delta_frame": "ee"
+    },
+    {
+      "name": "exp16_quat_dx18mm_dy-8mm_dz5mm_yaw10deg",
+      "use_orient": true,
+      "current": [0.15, 0.45, -0.22, 0.20, -0.14, 0.06],
+      "delta": [0.018, -0.008, 0.005, 0.0, 0.0, 0.1745],
+      "delta_frame": "ee"
+    },
+    {
+      "name": "exp17_quat_dx5mm_dy5mm_pitch3deg_yaw4deg",
+      "use_orient": true,
+      "current": [0.11, 0.41, -0.17, 0.19, -0.11, 0.05],
+      "delta": [0.005, 0.005, 0.0, 0.0, 0.0524, 0.0698],
+      "delta_frame": "ee"
+    },
+    {
+      "name": "exp18_quat_dx-10mm_dy-5mm_dz-15mm_roll-5deg",
+      "use_orient": true,
+      "current": [0.13, 0.39, -0.19, 0.17, -0.13, 0.04],
+      "delta": [-0.010, -0.005, -0.015, -0.0873, 0.0, 0.0],
+      "delta_frame": "ee"
+    },
+    {
+      "name": "exp19_quat_dx12mm_dz6mm_yaw6deg_pitch-3deg",
+      "use_orient": true,
+      "current": [0.10, 0.36, -0.15, 0.21, -0.12, 0.02],
+      "delta": [0.012, 0.0, 0.006, 0.0, -0.0524, 0.1047],
+      "delta_frame": "ee"
+    },
+    {
+      "name": "exp20_quat_dx8mm_dy-12mm_dz4mm_yaw2deg",
+      "use_orient": true,
+      "current": [0.12, 0.44, -0.16, 0.22, -0.16, 0.01],
+      "delta": [0.008, -0.012, 0.004, 0.0, 0.0, 0.0349],
+      "delta_frame": "ee"
+    }
+  ]
+}

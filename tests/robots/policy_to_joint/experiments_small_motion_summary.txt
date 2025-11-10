@@ -1,0 +1,80 @@
+Experiment: exp01_euler_dx15mm_dy5mm_yaw5deg
+Return code: 0
+Status: OK
+---
+Experiment: exp02_euler_dx10mm_dz10mm_yaw-5deg
+Return code: 0
+Status: OK
+---
+Experiment: exp03_euler_dx-12mm_dy9mm_dz10mm_yaw8deg
+Return code: 0
+Status: OK
+---
+Experiment: exp04_euler_dx10mm_pitch-5deg_yaw3deg
+Return code: 0
+Status: OK
+---
+Experiment: exp05_euler_dy-19mm_dz15mm_roll5deg
+Return code: 0
+Status: OK
+---
+Experiment: exp06_euler_dx18mm_dy-8mm_dz5mm_yaw10deg
+Return code: 0
+Status: OK
+---
+Experiment: exp07_euler_dx5mm_dy5mm_pitch3deg_yaw4deg
+Return code: 0
+Status: OK
+---
+Experiment: exp08_euler_dx-10mm_dy-5mm_dz-15mm_roll-5deg
+Return code: 0
+Status: OK
+---
+Experiment: exp09_euler_dx12mm_dz6mm_yaw6deg_pitch-3deg
+Return code: 0
+Status: OK
+---
+Experiment: exp10_euler_dx8mm_dy-12mm_dz4mm_yaw2deg
+Return code: 0
+Status: OK
+---
+Experiment: exp11_quat_dx15mm_dy5mm_yaw5deg
+Return code: 0
+Status: OK
+---
+Experiment: exp12_quat_dx10mm_dz10mm_yaw-5deg
+Return code: 0
+Status: OK
+---
+Experiment: exp13_quat_dx-12mm_dy9mm_dz10mm_yaw8deg
+Return code: 0
+Status: OK
+---
+Experiment: exp14_quat_dx10mm_pitch-5deg_yaw3deg
+Return code: 0
+Status: OK
+---
+Experiment: exp15_quat_dy-19mm_dz15mm_roll5deg
+Return code: 0
+Status: OK
+---
+Experiment: exp16_quat_dx18mm_dy-8mm_dz5mm_yaw10deg
+Return code: 0
+Status: OK
+---
+Experiment: exp17_quat_dx5mm_dy5mm_pitch3deg_yaw4deg
+Return code: 0
+Status: OK
+---
+Experiment: exp18_quat_dx-10mm_dy-5mm_dz-15mm_roll-5deg
+Return code: 0
+Status: OK
+---
+Experiment: exp19_quat_dx12mm_dz6mm_yaw6deg_pitch-3deg
+Return code: 0
+Status: OK
+---
+Experiment: exp20_quat_dx8mm_dy-12mm_dz4mm_yaw2deg
+Return code: 0
+Status: OK
+---

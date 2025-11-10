@@ -67,7 +67,6 @@ class PiperDual(Robot):
     def connect(self) -> None:
         # Connect piper motors
         self.sdk.connect()
-        print("Piper arm connected")
 
         # Connect cameras
         for name, camera in self.cameras.items():
@@ -92,7 +91,8 @@ class PiperDual(Robot):
             return
         
         # Disconnect piper motors
-        print("Piper arm disconnected after 3 seconds")
+        self.go_zero()
+        time.sleep(1)
         self.sdk.disconnect()
 
         # Disconnect cameras

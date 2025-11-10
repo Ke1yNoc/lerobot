@@ -53,26 +53,21 @@ class PiperSDKInterfaceDual:
         joint_5_r = int(positions[5] * self.factor)
         gripper_r = int(positions[6] * 100)
 
-        joint_0_l = int(-positions[7] * self.factor)
+        joint_0_l = int(positions[7] * self.factor)
         joint_1_l = int(positions[8] * self.factor)
         joint_2_l = int(positions[9] * self.factor)
-        joint_3_l = int(-positions[10] * self.factor)
+        joint_3_l = int(positions[10] * self.factor)
         joint_4_l = int(positions[11] * self.factor)
-        joint_5_l = int(-positions[12] * self.factor)
+        joint_5_l = int(positions[12] * self.factor)
         gripper_l = int(positions[13] * 100)
 
         self.piper_r.JointCtrl(joint_0_r, joint_1_r, joint_2_r, joint_3_r, joint_4_r, joint_5_r)
-        print("Setting right piper joint position:",joint_0_r, joint_1_r, joint_2_r, joint_3_r, joint_4_r, joint_5_r)
-        self.piper_l.JointCtrl(joint_0_l, joint_1_l, joint_2_l, joint_3_l, joint_4_l, joint_5_l)
-        print("Setting right piper joint position:",joint_0_l, joint_1_l, joint_2_l, joint_3_l, joint_4_l, joint_5_l)
-        
-        # Set gripper ctrl with pika gripper
         self.gripper_r.set_gripper_distance(gripper_r)
-        print("Setting right gripper distance:",gripper_r)
-        
-        # Set gripper ctrl with pika gripper
+        print("Setting right piper joint position:",joint_0_r, joint_1_r, joint_2_r, joint_3_r, joint_4_r, joint_5_r,"Gripper:", gripper_r)
+        self.piper_l.JointCtrl(joint_0_l, joint_1_l, joint_2_l, joint_3_l, joint_4_l, joint_5_l)
         self.gripper_l.set_gripper_distance(gripper_l)
-        print("Setting left gripper distance:",gripper_l)
+        print("Setting left piper joint position:",joint_0_l, joint_1_l, joint_2_l, joint_3_l, joint_4_l, joint_5_l,"Gripper:", gripper_l)
+        
 
     def set_end_position(self, positions):
         # Right 7 + Left 7
@@ -175,14 +170,14 @@ class PiperSDKInterfaceDual:
         return obs_dict
 
     def disconnect(self):
-        self.piper_r.ModeCtrl(0x01, 0x01, 30, 0x00)
-        self.piper_l.ModeCtrl(0x01, 0x01, 30, 0x00)
-        self.piper_r.JointCtrl(0, 0, 0, 0, 18000, 0)
-        self.piper_l.JointCtrl(0, 0, 0, 0, 18000, 0)
+        self.piper_r.ModeCtrl(0x01, 0x01, 10, 0x00)
+        self.piper_l.ModeCtrl(0x01, 0x01, 10, 0x00)
+        self.piper_r.JointCtrl(0, 0, 0, 0, 17900, 0)
+        self.piper_l.JointCtrl(0, 0, 0, 0, 17900, 0)
         time.sleep(2)
         while(self.piper_r.DisablePiper() and self.piper_l.DisablePiper()):
             time.sleep(0.01)
-        print("Both Piper Disconnected ！")
+        print("Piper arms disconnected")
     
     def connect(self):
         # reset the arm if it's not in idle state
@@ -233,6 +228,10 @@ class PiperSDKInterfaceDual:
             print("Left Pika Gripper 电机启用失败")
             return
         print("Left Pika Gripper 电机启用成功")
+
+        print("前往零位")
+        self.piper_r.JointCtrl(0, 0, 0, 0, 0, 0)
+        self.piper_l.JointCtrl(0, 0, 0, 0, 0, 0)
 
     def go_zero(self):
         self.piper_r.ModeCtrl(0x01, 0x01, 30, 0x00)
