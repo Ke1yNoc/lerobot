@@ -92,7 +92,7 @@ class PiperDual(Robot):
         
         # Disconnect piper motors
         self.go_zero()
-        time.sleep(1)
+        time.sleep(3)
         self.sdk.disconnect()
 
         # Disconnect cameras

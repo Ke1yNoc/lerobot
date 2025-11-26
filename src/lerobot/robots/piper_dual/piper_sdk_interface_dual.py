@@ -232,6 +232,8 @@ class PiperSDKInterfaceDual:
         print("前往零位")
         self.piper_r.JointCtrl(0, 0, 0, 0, 0, 0)
         self.piper_l.JointCtrl(0, 0, 0, 0, 0, 0)
+        self.gripper_l.set_gripper_distance(30)
+        self.gripper_r.set_gripper_distance(30)
 
     def go_zero(self):
         self.piper_r.ModeCtrl(0x01, 0x01, 30, 0x00)

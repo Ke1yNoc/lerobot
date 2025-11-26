@@ -4,7 +4,6 @@ import time
 import torch
 
 from lerobot.cameras.opencv import OpenCVCameraConfig
-from lerobot.robots.piper import PiperConfig, Piper
 from lerobot.robots.piper_dual import PiperConfigDual, PiperDual
 import math
 
@@ -18,7 +17,7 @@ GRIPPER_L = "/dev/ttyUSB82"
 CAM_L = 82
 
 # Sleep interval between actions
-DT = 1
+DT = 3
 
 def run_dual() -> None:
     camera_cfg_dual = {
@@ -35,10 +34,10 @@ def run_dual() -> None:
     robot = PiperDual(cfg_dual)
     robot.connect()
     seq = [
-        # [R7 ..., L7 ...]
-        [0.3, 0, -0.1, 0, 0, 0, 0.96, -0.3, 0, -0.1, 0, 0, 0, 0.36],
-        [0, 0, -0.1, 0, 0, 0, 0.66, 0, 0, -0.1, 0, 0, 0, 0.66],
-        [-0.3, 0, -0.1, 0, 0, 0, 0.36, 0.3, 0, -0.1, 0, 0, 0, 0.96],
+        ## joint angle
+        [0.0, 0.2, -0.4, 0.0, 0.6, 0, 0.96, 0.3, 0, -0.1, 0, 0, 0, 0.36],
+        # [0, 0, -0.1, 0, 0, 0, 0.66, 0, 0, -0.1, 0, 0, 0, 0.66],
+        # [-0.3, 0, -0.1, 0, 0, 0, 0.36, -0.3, 0, -0.1, 0, 0, 0, 0.96],
     ]
     try:
         for v in seq:
